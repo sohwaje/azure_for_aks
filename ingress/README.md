@@ -8,7 +8,7 @@ kubectl create namespace ingress-basic
 # helm에 ingress-nginx 리포지토리를 추가한다.
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
-# helm을 사용하여 인그레스를 배포한다.
+# helm을 사용하여 인그레스 설치
 helm install nginx-ingress ingress-nginx/ingress-nginx \
     --namespace ingress-basic \
     --set controller.replicaCount=2 \
@@ -38,7 +38,7 @@ kubectl create secret tls aks-ingress-tls \
     --cert aks-ingress-tls.crt
 ```
 
-### [4] 완성된 ingress.yml
+### [4] 완성된 인그레스 수신 컨트롤러 파일 - ingress.yml
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -62,3 +62,35 @@ spec:
           serviceName: hi-class-api
           servicePort: 80
 ```
+
+### [5] 인그레스 수신 컨트롤러 적용하기
+```
+kubectl apply -f hello-world-ingress.yaml
+```
+
+### [6] 테스트
+```
+curl -v -k --resolve demo.azure.com:443:EXTERNAL_IP https://demo.azure.com
+```
+
+### [7-1] helm으로 설치한 인그레스 리스트 확인
+```
+helm list --namespace ingress-basic
+```
+
+### [7-2] 설치한 인그레스 삭제
+```
+helm uninstall nginx-ingress --namespace ingress-basic
+```
+
+### [7-3] 배포한 인그레스 컨트롤러 삭제
+```
+kubectl delete -f ingress.yml --namespace ingress-basic
+```
+
+### [7-4] 인그레스 secreName 삭제
+```
+kubectl delete secret aks-ingress-tls
+```
+
+### [레퍼런스](https://docs.microsoft.com/ko-kr/azure/aks/ingress-own-tls#clean-up-resources)
