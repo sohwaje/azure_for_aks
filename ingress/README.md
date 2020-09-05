@@ -30,10 +30,35 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -subj "/CN=demo.azure.com/O=aks-ingress-tls"
 ```
 
-### [3] TLS 인증서를 쿠버네티스의 secret으로 설정하기(여기서는 "tls aks-ingress-tls")
+### [3] TLS 인증서를 쿠버네티스의 secretName으로 설정하기(여기서는 "tls aks-ingress-tls")
 ```
 kubectl create secret tls aks-ingress-tls \
     --namespace ingress-basic \
     --key aks-ingress-tls.key \
     --cert aks-ingress-tls.crt
+```
+
+### [4] 완성된 ingress.yml
+```
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hi-class-api-ingress
+  namespace: ingress-basic
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - stagea.example.net
+    secretName: aks-ingress-tls
+  rules:
+  - host: stagea.example.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hi-class-api
+          servicePort: 80
 ```
