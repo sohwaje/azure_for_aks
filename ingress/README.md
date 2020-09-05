@@ -93,4 +93,5 @@ kubectl delete -f ingress.yml --namespace ingress-basic
 kubectl delete secret aks-ingress-tls
 ```
 
-### [레퍼런스](https://docs.microsoft.com/ko-kr/azure/aks/ingress-own-tls#clean-up-resources)
+### 참조
+- [레퍼런스](https://docs.microsoft.com/ko-kr/azure/aks/ingress-own-tls#clean-up-resources)
