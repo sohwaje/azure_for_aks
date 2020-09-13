@@ -14,7 +14,7 @@ az login
 `
 az account list --output table
 `
-#### 구독 리소스가 여러개라면, 하나의 구독을 기본 값으로 지정
+#### 하나의 구독을 기본 값으로 지정
 `
 az account set -s "ACCOUNT_ID"
 `
