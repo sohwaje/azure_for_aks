@@ -5,16 +5,16 @@
 ```
 # 설치
 brew update && brew install azure-cli
-
+```
+```
 # 로그인
-
 az login
-
+```
+```
 # 구독 확인
-
 az account list --output table
-
+```
+```
 # 하나의 구독을 기본 값으로 지정
-
 az account set -s "ACCOUNT_ID"
 ```
